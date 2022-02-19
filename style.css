@@ -1,0 +1,6 @@
+#GameBoard {
+	border: 1px solid black;
+	position: absolute;
+	left: 30%;
+	top: 15%;
+}
