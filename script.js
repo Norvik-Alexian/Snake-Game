@@ -20,4 +20,24 @@ function showSnake() {
     snake.forEach(element => drawSquare(element.x, element.y, 'lightblue', 'black'));
 }
 
-showSnake();
+function goSnake() {
+    const head = {x: snake[0].x + 10, y: snake[0].y};
+    snake.unshift(head);
+    snake.pop();
+}
+
+function clearBoard() {
+    context.fillStyle = "white";
+    context.fillRect(0, 0, GameBoard.width, GameBoard.height)
+}
+
+function startMoving() {
+    setTimeout(() => {
+        clearBoard();
+        goSnake();
+        showSnake();
+        startMoving();
+    }, 400);
+}
+
+startMoving();
