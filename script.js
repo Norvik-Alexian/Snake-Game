@@ -9,8 +9,8 @@ let snake = [
     {x:210, y:250}
 ];
 
-let stepX = 0;
-let stepY = 10;
+let stepX = 10;
+let stepY = 0;
 
 function drawSquare(xCordinate, yCordinate, squareColor, borderColor) {
     context.fillStyle = squareColor;
@@ -81,17 +81,6 @@ function changeDirection(event) {
     }
 }
 
-function startMoving() {
-    setTimeout(() => {
-        clearBoard();
-        goSnake();
-        showSnake();
-        startMoving();
-    }, 400);
-}
-
-startMoving();
-
 function isSnakeAlive() {
     if (
         snake[0].x < 0 ||  // head hits the left wall
@@ -110,3 +99,19 @@ function isSnakeAlive() {
     return true;
 
 }
+
+function startMoving() {
+    document.addEventListener("keydown", changeDirection);
+    setTimeout(() => {
+        if (isSnakeAlive()) {
+            goSnake();
+        } else {
+            return false;
+        }
+        clearBoard();
+        showSnake();
+        startMoving();
+    }, 400);
+}
+
+startMoving();
