@@ -9,6 +9,9 @@ let snake = [
     {x:210, y:250}
 ];
 
+let stepX = 0;
+let stepY = 10;
+
 function drawSquare(xCordinate, yCordinate, squareColor, borderColor) {
     context.fillStyle = squareColor;
     context.strokeStyle = borderColor;
@@ -21,7 +24,7 @@ function showSnake() {
 }
 
 function goSnake() {
-    const head = {x: snake[0].x + 10, y: snake[0].y};
+    const head = {x: snake[0].x + stepX, y: snake[0].y + stepY};
     snake.unshift(head);
     snake.pop();
 }
@@ -29,6 +32,53 @@ function goSnake() {
 function clearBoard() {
     context.fillStyle = "white";
     context.fillRect(0, 0, GameBoard.width, GameBoard.height)
+}
+
+document.addEventListener("keydown", function(event) {
+    const leftKey = 37;
+    const rightKey = 39;
+    const upKey = 38;
+    const downKey = 40;
+})
+
+let direction = 'right';
+
+function changeDirection(event) {
+    const pressedKey = event.keyCode;
+    const leftKey = 37;
+    const rightKey = 39;
+    const upKey = 38;
+    const downKey = 40;
+    switch(pressedKey) {
+        case leftKey:
+            if (direction != 'right') {
+                stepX = -10;
+                stepY = 0;
+                direction = 'left';
+            }
+            break;
+        case rightKey:
+            if (direction != 'left') {
+                stepX = 10;
+                stepY = 0;
+                direction = 'right';
+            }
+            break;
+        case upKey:
+            if (direction != 'down') {
+                stepX = 0;
+                stepY = -10;
+                direction = 'up';
+            }
+            break;
+        case downKey:
+            if (direction != 'up') {
+                stepX = 0;
+                stepY = 10;
+                direction = 'down';
+            }
+            break;
+    }
 }
 
 function startMoving() {
