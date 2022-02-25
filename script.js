@@ -91,3 +91,22 @@ function startMoving() {
 }
 
 startMoving();
+
+function isSnakeAlive() {
+    if (
+        snake[0].x < 0 ||  // head hits the left wall
+        snake[0].x > GameBoard.width - 10 ||  // head hits the right wall
+        snake[0].y < 0 ||  // head hits top wall
+        snake[0].y > GameBoard.width -10  // head hits the bottom wall
+    ) {
+        return false;
+    }
+    for (let i = 4; i < snake.length; i++) {
+        if (snake[i].x == snake[0].x && snake[i].y === snake[0].y) {
+            return false;
+        }
+    }
+
+    return true;
+
+}
