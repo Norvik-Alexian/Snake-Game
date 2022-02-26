@@ -34,13 +34,6 @@ function clearBoard() {
     context.fillRect(0, 0, GameBoard.width, GameBoard.height)
 }
 
-document.addEventListener("keydown", function(event) {
-    const leftKey = 37;
-    const rightKey = 39;
-    const upKey = 38;
-    const downKey = 40;
-})
-
 let direction = 'right';
 
 function changeDirection(event) {
