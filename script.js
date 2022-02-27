@@ -11,6 +11,8 @@ let snake = [
 
 let stepX = 10;
 let stepY = 0;
+let food = {x:200, y:300};
+
 
 function drawSquare(xCordinate, yCordinate, squareColor, borderColor) {
     context.fillStyle = squareColor;
@@ -21,12 +23,6 @@ function drawSquare(xCordinate, yCordinate, squareColor, borderColor) {
 
 function showSnake() {
     snake.forEach(element => drawSquare(element.x, element.y, 'lightblue', 'black'));
-}
-
-function goSnake() {
-    const head = {x: snake[0].x + stepX, y: snake[0].y + stepY};
-    snake.unshift(head);
-    snake.pop();
 }
 
 function clearBoard() {
@@ -93,6 +89,35 @@ function isSnakeAlive() {
 
 }
 
+function giveMeRandom(from, to, step) {
+    let rand = Math.random(); // gives a number between 0 and 1
+    rand *= (to-from) / step;
+    rand = Math.floor(rand);
+    rand *= step;
+    rand += from;
+    return rand;
+}
+
+function giveMeFood() {
+    food.x = giveMeRandom(0, GameBoard.width, 10);
+    food.y = giveMeRandom(0, GameBoard.height, 10);
+    snake.forEach(part => {
+        if (part.x == food.x && part.y == food.y) {
+            giveMeFood();
+        }
+    })
+}
+
+function goSnake() {
+    const head = {x: snake[0].x + stepX, y: snake[0].y + stepY};
+    snake.unshift(head);
+    if (snake[0].x == food.x && snake[0].y == food.y) {
+        giveMeFood();
+    } else {
+        snake.pop();
+    }
+}
+
 function startMoving() {
     document.addEventListener("keydown", changeDirection);
     setTimeout(() => {
@@ -103,6 +128,7 @@ function startMoving() {
         }
         clearBoard();
         showSnake();
+        drawSquare(food.x, food.y, 'red', 'black');
         startMoving();
     }, 400);
 }
